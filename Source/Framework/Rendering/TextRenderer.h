@@ -23,11 +23,11 @@ public:
 
     void draw();
 private:
-    Microsoft::WRL::ComPtr<IDWriteFactory2> writeFactory;
-    Microsoft::WRL::ComPtr<ID2D1Factory2> factory;
+    Microsoft::WRL::ComPtr<IDWriteFactory1> writeFactory;
+    Microsoft::WRL::ComPtr<ID2D1Factory1> factory;
     Microsoft::WRL::ComPtr<IDXGIDevice> dxgiDevice;
-    Microsoft::WRL::ComPtr<ID2D1Device1> device;
-    Microsoft::WRL::ComPtr<ID2D1DeviceContext1> context;
+    Microsoft::WRL::ComPtr<ID2D1Device> device;
+    Microsoft::WRL::ComPtr<ID2D1DeviceContext> context;
     std::array<Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>, static_cast<size_t>(TextColor::NUM_ENTRIES)> brushes;
     Microsoft::WRL::ComPtr<IDXGISurface> dxgiBuffer;
     Microsoft::WRL::ComPtr<ID2D1Bitmap1> targetBitmap;

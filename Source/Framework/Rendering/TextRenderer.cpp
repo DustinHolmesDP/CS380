@@ -66,7 +66,7 @@ void TextRenderer::draw()
 
 bool TextRenderer::create_factories()
 {
-    auto result = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), &writeFactory);
+    auto result = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory1), &writeFactory);
     if (FAILED(result) == true)
     {
         std::cout << "Failed to create DirectWrite factory: " << result << std::endl;
@@ -80,7 +80,7 @@ bool TextRenderer::create_factories()
     options.debugLevel = D2D1_DEBUG_LEVEL_NONE;
     #endif
 
-    result = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, __uuidof(ID2D1Factory2), &options, &factory);
+    result = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, __uuidof(ID2D1Factory1), &options, &factory);
     if (FAILED(result) == true)
     {
         std::cout << "Failed to create Direct2D factory: " << result << std::endl;
