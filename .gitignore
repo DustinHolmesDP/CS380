@@ -24,4 +24,4 @@ x64/
 ipch
 *sdf
 
-!Packages
+!/Packages/directxtk_desktop_2015.2017.12.13.1/build/native/lib/**/*
