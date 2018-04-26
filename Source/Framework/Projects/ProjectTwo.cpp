@@ -250,7 +250,7 @@ void ProjectTwo::build_ui()
     // add a banner to display overall testing results
     TextGetter testingText = std::bind(&PathTester::get_status_text, &tester);
     auto testingBanner = ui->create_dynamic_banner_text_field(UIAnchor::BOTTOM,
-        0, -32, UIAnchor::CENTER, testingText);
+        0, -16, UIAnchor::CENTER, testingText);
 
     // and a banner above that to display test specific failure messages
     TextGetter failMSGText = std::bind(&PathTester::get_failed_text, &tester);
