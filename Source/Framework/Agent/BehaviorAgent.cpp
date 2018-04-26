@@ -73,6 +73,9 @@ bool BehaviorAgent::move_toward_point(const Vec3 &point, float dt)
 
         const auto nextPos = currentPos + delta;
         set_position(nextPos);
+
+        const float yaw = std::atan2(delta.x, delta.z);
+        set_yaw(yaw);
     }
 
     return result;
