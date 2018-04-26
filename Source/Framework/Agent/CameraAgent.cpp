@@ -3,7 +3,7 @@
 
 namespace
 {
-    const Vec3 defaultEyePosition((Terrain::mapSizeInWorld * 0.4f), Terrain::mapSizeInWorld * 1.4f, Terrain::mapSizeInWorld * 0.5f);
+    const Vec3 defaultEyePosition((Terrain::mapSizeInWorld * 0.4f), Terrain::mapSizeInWorld * 1.45f, Terrain::mapSizeInWorld * 0.5f);
     const float defaultPitch = 1.50098; // 86 degrees
     const float defaultYaw = HALF_PI;
 }
