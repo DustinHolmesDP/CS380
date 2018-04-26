@@ -21,13 +21,12 @@ public:
 
     void set_value(int row, int col, const T &value);
     void set_value(const GridPos &gridPos, const T &value);
-    void set_all_values(const T &value);
 
     bool is_enabled() const { return enabled; }
     void set_enabled(bool state) { enabled = state; }
     void toggle_enabled() { enabled = !enabled; }
 
-    void decay(float rate);
+    void for_each(std::function<void(T &)> op);
 private:
 
     T **data;
@@ -85,37 +84,13 @@ inline void MapLayer<T>::set_value(const GridPos &gridPos, const T &value)
 }
 
 template<typename T>
-inline void MapLayer<T>::set_all_values(const T & value)
+inline void MapLayer<T>::for_each(std::function<void(T &)> op)
 {
     for (int h = 0; h < height; ++h)
     {
         for (int w = 0; w < width; ++w)
         {
-            data[h][w] = value;
-        }
-    }
-}
-
-template<typename T>
-inline void MapLayer<T>::decay(float rate)
-{
-    for (int h = 0; h < height; ++h)
-    {
-        for (int w = 0; w < width; ++w)
-        {
-            data[h][w] *= rate;
-        }
-    }
-}
-
-template<>
-inline void MapLayer<bool>::decay(float)
-{
-    for (int h = 0; h < height; ++h)
-    {
-        for (int w = 0; w < width; ++w)
-        {
-            data[h][w] = false;
+            op(data[h][w]);
         }
     }
 }
