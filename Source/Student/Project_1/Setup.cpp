@@ -19,6 +19,6 @@ void ProjectOne::setup()
 
     // camera position can be modified from this default as well
     auto camera = agents->get_camera_agent();
-    camera->set_position(Vec3(-50.0f, 70.0f, terrain->mapSizeInWorld * 0.5f));
+    camera->set_position(Vec3(-62.0f, 70.0f, terrain->mapSizeInWorld * 0.5f));
     camera->set_pitch(0.610865); // 35 degrees
 }
