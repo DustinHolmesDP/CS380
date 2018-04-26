@@ -32,7 +32,7 @@ bool Engine::initialize(HINSTANCE hInstance, int nCmdShow)
 
     return Serialization::initialize() &&
         renderer->initialize(hInstance, nCmdShow) &&
-        AudioWrapper::listen_for_new_devices();
+        //AudioWrapper::listen_for_new_devices() &&
         allocate_project() &&
         project->initialize();
 }
@@ -42,7 +42,7 @@ void Engine::shutdown()
     project->shutdown();
     project.reset();
 
-    AudioWrapper::stop_listening_for_new_devices();
+    //AudioWrapper::stop_listening_for_new_devices();
 
     renderer->shutdown();
     renderer.reset();

@@ -363,7 +363,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     
-    case WM_DEVICECHANGE:
+    /*case WM_DEVICECHANGE:
         if (wParam == DBT_DEVICEARRIVAL)
         {
             auto pDev = reinterpret_cast<PDEV_BROADCAST_HDR>(lParam);
@@ -381,7 +381,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                 }
             }
-        }
+        }*/
 
     case WM_DESTROY:
         PostQuitMessage(0);

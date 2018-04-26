@@ -591,7 +591,6 @@
     </Manifest>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Assets\mannequin_rig.sdkmesh">
       <Filter>Assets</Filter>
     </None>
@@ -601,6 +600,7 @@
     <None Include="Source\Student\Project_1\Trees.def">
       <Filter>Source\Student\Project_1</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Framework\Rendering\GridCellPixelShader.hlsl">
