@@ -3,11 +3,9 @@
 
 namespace
 {
-    //const Vec3 defaultEyePosition((Terrain::mapSizeInWorld * 0.4f), Terrain::mapSizeInWorld * 1.4f, Terrain::mapSizeInWorld * 0.5f);
-    //const Vec3 defaultLookPosition(Terrain::mapSizeInWorld * 0.5f, Terrain::mapSizeInWorld * -0.1f, Terrain::mapSizeInWorld * 0.5f);
-
     const Vec3 defaultEyePosition((Terrain::mapSizeInWorld * 0.4f), Terrain::mapSizeInWorld * 1.4f, Terrain::mapSizeInWorld * 0.5f);
-    const Vec3 defaultLookPosition(Terrain::mapSizeInWorld * 0.5f, Terrain::mapSizeInWorld * -0.1f, Terrain::mapSizeInWorld * 0.5f);
+    const float defaultPitch = 1.50098; // 86 degrees
+    const float defaultYaw = HALF_PI;
 }
 
 const char *CameraAgent::cameraTypeName = "Camera";
@@ -29,5 +27,6 @@ Mat4 CameraAgent::get_view_matrix() const
 void CameraAgent::set_position_to_default()
 {
     set_position(defaultEyePosition);
-    look_at_point(defaultLookPosition);
+    set_yaw(defaultYaw);
+    set_pitch(defaultPitch);
 }

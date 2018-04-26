@@ -17,7 +17,11 @@ public:
     Vec3 get_forward_vector() const;
     Vec3 get_right_vector() const;
     Vec3 get_up_vector() const;
-    const Mat4 &get_rotation() const;
+
+    // in radians
+    float get_yaw() const;
+    float get_pitch() const;
+    float get_roll() const;
 
     const Vec3 &get_color() const;
     
@@ -34,9 +38,9 @@ public:
     void set_scaling(const Vec3 &scale);
     void set_scaling(float scalar);
 
-    void look_in_direction(const Vec3 &dir);
-    void look_at_point(const Vec3 &point);
-    void set_rotation(const Mat4 &rot);
+    void set_yaw(float angleRadians);
+    void set_pitch(float angleRadians);
+    void set_roll(float angleRadians);
 
     void set_color(const Vec3 &newColor);
     
@@ -48,7 +52,7 @@ public:
 private:
     Vec3 position;
     Vec3 scaling;
-    Mat4 rotation;
+    Vec3 eulerAngles;
 
     Mat4 localToWorld;
     bool isDirty;

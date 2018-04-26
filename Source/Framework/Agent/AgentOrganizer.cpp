@@ -2,6 +2,7 @@
 #include "AgentOrganizer.h"
 #include "CameraAgent.h"
 #include "AStarAgent.h"
+#include "EnemyAgent.h"
 #include "BehaviorAgent.h"
 #include "Projects/ProjectOne.h"
 #include "UI/Elements/Text/UIBehaviorTreeTextField.h"
@@ -74,6 +75,21 @@ AStarAgent *AgentOrganizer::create_pathing_agent()
     std::cout << "Creating pathing agent " << id << std::endl;
 
     auto agent = new AStarAgent(id);
+
+    agentsAll.emplace_back(agent);
+    agentsByType[AStarAgent::patherTypeName].emplace_back(agent);
+
+    return agent;
+}
+
+EnemyAgent *AgentOrganizer::create_enemy_agent()
+{
+    auto &idCounter = agentIDCounts[AStarAgent::patherTypeName];
+    const auto id = idCounter++;
+
+    std::cout << "Creating enemy agent " << id << std::endl;
+
+    auto agent = new EnemyAgent(id);
 
     agentsAll.emplace_back(agent);
     agentsByType[AStarAgent::patherTypeName].emplace_back(agent);

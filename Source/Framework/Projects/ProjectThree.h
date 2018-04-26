@@ -21,21 +21,17 @@ public:
 
 private:
     AStarAgent *player;
-    AStarAgent *enemy;
+    EnemyAgent *enemy;
 
     std::wstring propagationDecayText;
     std::wstring propagationGrowthText;
     std::wstring analysisFrequencyText;
-    std::wstring enemyFOVText;
-    std::wstring enemyRadiusText;
 
     float propagationDecay;
     float propagationGrowth;
     unsigned analysisFrequency;
     unsigned frequencyMod;
     unsigned frequencyOffset;
-    float enemyFOV;
-    float enemyRadius;
 
     bool openness;
     bool totalVisibility;
@@ -56,15 +52,6 @@ private:
     float get_propagation_growth();
     void set_propagation_growth(const float &val);
     const std::wstring &get_propagation_growth_text();
-
-    float get_enemy_fov();
-    void set_enemy_fov(const float &val);
-    const std::wstring &get_enemy_fov_text();
-
-    float get_enemy_radius();
-    void set_enemy_radius(const float &val);
-    const std::wstring &get_enemy_radius_text();
-
 
     void build_ui();
     void link_input();

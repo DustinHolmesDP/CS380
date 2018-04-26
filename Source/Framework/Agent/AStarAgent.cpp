@@ -62,7 +62,9 @@ void AStarAgent::update(float dt)
                 const auto movement = delta * (get_movement_speed() * dt / static_cast<float>(terrain->get_map_width()));
 
                 set_position(currPos + movement);
-                look_in_direction(delta);
+
+                const float yaw = std::atan2(delta.x, delta.z);
+                set_yaw(yaw);
             }
         }
     }
@@ -74,7 +76,7 @@ void AStarAgent::update(float dt)
     }
 }
 
-void AStarAgent::path_to(const Vec3 &point)
+void AStarAgent::path_to(const Vec3 &point, bool timed)
 {
     const auto gridPos = terrain->get_grid_position(point);
 
@@ -87,7 +89,10 @@ void AStarAgent::path_to(const Vec3 &point)
         request.settings = buffer.settings;
         request.newRequest = true;
 
-        Messenger::send_message(Messages::PATH_REQUEST_BEGIN);
+        if (timed == true)
+        {
+            Messenger::send_message(Messages::PATH_REQUEST_BEGIN);
+        }
 
         process_request();
     }

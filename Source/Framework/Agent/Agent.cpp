@@ -2,11 +2,15 @@
 #include "Agent.h"
 #include "../Rendering/DrawPackage.h"
 
+const Vec3 globalUp = Vec3(0.0f, 1.0f, 0.0f);
+const Vec3 globalRight = Vec3(-1.0f, 0.0f, 0.0f);
+const Vec3 globalForward = Vec3(0.0f, 0.0f, 1.0f);
+
 // TODO: move this temp model stuff to renderer in some capacity, if time permits
 std::unique_ptr<DirectX::Model> Agent::model;
 
 Agent::Agent(const char *type, size_t id) : position(0.0f, 0.0f, 0.0f),
-    scaling(3.0f, 3.0f, 3.0f), rotation(Mat4::Identity), isDirty(true), color(0.7f, 0.7f, 0.7f), type(type), id(id), movementSpeed(500.0f)
+    scaling(3.0f, 3.0f, 3.0f), eulerAngles(0.0f, 0.0f, 0.0f), isDirty(true), color(0.7f, 0.7f, 0.7f), type(type), id(id), movementSpeed(500.0f)
 {}
 
 #pragma region Getters
@@ -23,25 +27,35 @@ const Vec3 &Agent::get_scaling() const
 
 Vec3 Agent::get_forward_vector() const
 {
-    //return rotation.Forward();
-    return Vec3(-rotation(0, 2), -rotation(1, 2), -rotation(2, 2));
+    const auto rotation = Quat::CreateFromYawPitchRoll(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+    return Vec3::Transform(globalForward, rotation);
 }
 
 Vec3 Agent::get_right_vector() const
 {
-    //return rotation.Right();
-    return Vec3(rotation(0, 0), rotation(1, 0), rotation(2, 0));
+    const auto rotation = Quat::CreateFromYawPitchRoll(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+    return Vec3::Transform(globalRight, rotation);
 }
 
 Vec3 Agent::get_up_vector() const
 {
-    //return rotation.Up();
-    return Vec3(rotation(0, 1), rotation(1, 1), rotation(2, 1));
+    const auto rotation = Quat::CreateFromYawPitchRoll(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+    return Vec3::Transform(globalUp, rotation);
 }
 
-const Mat4 &Agent::get_rotation() const
+float Agent::get_yaw() const
 {
-    return rotation;
+    return eulerAngles.x;
+}
+
+float Agent::get_pitch() const
+{
+    return eulerAngles.y;
+}
+
+float Agent::get_roll() const
+{
+    return eulerAngles.z;
 }
 
 const Vec3 &Agent::get_color() const
@@ -96,23 +110,21 @@ void Agent::set_scaling(float scalar)
     isDirty = true;
 }
 
-void Agent::look_in_direction(const Vec3 &dir)
+void Agent::set_yaw(float angleRadians)
 {
-    rotation = Mat4::CreateLookAt(position, position + dir, Vec3::Up);
-    //auto quat = Quat::CreateFromRotationMatrix(rotation);
-    //rotation = Mat4::CreateFromQuaternion(quat);
+    eulerAngles.x = angleRadians;
     isDirty = true;
 }
 
-void Agent::look_at_point(const Vec3 &point)
+void Agent::set_pitch(float angleRadians)
 {
-    rotation = Mat4::CreateLookAt(position, point, Vec3::Up);
+    eulerAngles.y = angleRadians;
     isDirty = true;
 }
 
-void Agent::set_rotation(const Mat4 &rot)
+void Agent::set_roll(float angleRadians)
 {
-    rotation = rot;
+    eulerAngles.z = angleRadians;
     isDirty = true;
 }
 
@@ -199,10 +211,8 @@ void Agent::build_transformation()
 {
     const auto translationMatrix = Mat4::CreateTranslation(position);
     const auto scalingMatrix = Mat4::CreateScale(scaling * globalScalar);
-    //localToWorld = scalingMatrix;
-    //localToWorld *= rotation;
-    //localToWorld *= translationMatrix;
-    
-    //localToWorld = translationMatrix * rotation * scalingMatrix;
-    localToWorld = scalingMatrix * rotation * translationMatrix;
+    const auto rotation = Quat::CreateFromYawPitchRoll(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+    const auto rotationMatrix = Mat4::CreateFromQuaternion(rotation);
+
+    localToWorld = scalingMatrix * rotationMatrix * translationMatrix;
 }

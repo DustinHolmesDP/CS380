@@ -10,12 +10,14 @@ class DeviceResources;
 class ProjectOne;
 class ProjectTwo;
 class ProjectThree;
+class EnemyAgent;
 
 class Terrain
 {
     friend class ProjectOne;
     friend class ProjectTwo;
     friend class ProjectThree;
+    friend class EnemyAgent;
 public:
     static const size_t numLayers = 8;
 

@@ -3,7 +3,7 @@
 #include <list>
 #include "misc/PathfindingDetails.hpp"
 
-class AStarAgent final : public Agent
+class AStarAgent : public Agent
 {
 public:
     AStarAgent(size_t id);
@@ -11,7 +11,7 @@ public:
     virtual void update(float dt) override final;
     static const char *patherTypeName;
 
-    void path_to(const Vec3 &point);
+    virtual void path_to(const Vec3 &point, bool timed = true);
 
     // all the getters and setters needed to hook directly into ui
     void next_heuristic_type();
@@ -53,7 +53,7 @@ public:
     const PathRequest &get_request_data() const;
     void bulk_set_request_settings(const PathRequest::Settings &setting);
 
-private:
+protected:
     PathRequest request;
     PathRequest buffer;
     bool computingPath;

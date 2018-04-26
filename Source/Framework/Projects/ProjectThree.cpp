@@ -4,7 +4,7 @@
 #include "Terrain/TerrainAnalysis.h"
 #include "Agent/AStarAgent.h"
 #include <sstream>
-
+#include "Agent\EnemyAgent.h"
 #include "UI/Elements/Buttons/UIButton.h"
 #include "UI/Elements/Sliders/UISlider.h"
 #include "UI/Elements/Text/UIValueTextField.h"
@@ -39,16 +39,14 @@ bool ProjectThree::finalize()
     player->set_single_step(false);
     player->set_color(Vec3(0.0f, 0.0f, 0.8f));
 
-    enemy = agents->create_pathing_agent();
+    enemy = agents->create_enemy_agent();
     enemy->set_debug_coloring(false);
     enemy->set_single_step(false);
     enemy->set_color(Vec3(0.8f, 0.0f, 0.0f));
+    enemy->set_player(player);
 
     set_propagation_growth(0.15f);
     set_propagation_decay(0.05f);
-
-    set_enemy_fov(45.0f);
-    set_enemy_radius(5.0f);
 
     build_ui();
 
@@ -127,7 +125,11 @@ void ProjectThree::update()
 
     if (search == true)
     {
-        terrain->agentVisionLayer.decay(0.995f);
+        auto decayOp = [](float &val)
+        {
+            val *= 0.995f;
+        };
+        terrain->agentVisionLayer.for_each(decayOp);
 
         if (frameDelay == frequencyOffset)
         {
@@ -213,44 +215,6 @@ const std::wstring &ProjectThree::get_propagation_growth_text()
     return propagationGrowthText;
 }
 
-float ProjectThree::get_enemy_fov()
-{
-    return enemyFOV;
-}
-
-void ProjectThree::set_enemy_fov(const float &val)
-{
-    enemyFOV = val;
-    std::wstringstream stream;
-    stream.precision(3);
-    stream << enemyFOV;
-    enemyFOVText = stream.str();
-}
-
-const std::wstring &ProjectThree::get_enemy_fov_text()
-{
-    return enemyFOVText;
-}
-
-float ProjectThree::get_enemy_radius()
-{
-    return enemyRadius;
-}
-
-void ProjectThree::set_enemy_radius(const float &val)
-{
-    enemyRadius = val;
-    std::wstringstream stream;
-    stream.precision(3);
-    stream << enemyRadius;
-    enemyRadiusText = stream.str();
-}
-
-const std::wstring &ProjectThree::get_enemy_radius_text()
-{
-    return enemyRadiusText;
-}
-
 void ProjectThree::build_ui()
 {
     // add a text field at the top for the project
@@ -329,15 +293,15 @@ void ProjectThree::build_ui()
     auto growthSlider = ui->create_slider<float>(UIAnchor::BOTTOM, decaySlider,
         10, 0.0f, 1.0f, growthGet, growthSet, growthText, L"Growth");
 
-    Getter<float> fovGet = std::bind(&ProjectThree::get_enemy_fov, this);
-    Setter<float> fovSet = std::bind(&ProjectThree::set_enemy_fov, this, std::placeholders::_1);
-    TextGetter fovText = std::bind(&ProjectThree::get_enemy_fov_text, this);
+    Getter<float> fovGet = std::bind(&EnemyAgent::get_fov, enemy);
+    Setter<float> fovSet = std::bind(&EnemyAgent::set_fov, enemy, std::placeholders::_1);
+    TextGetter fovText = std::bind(&EnemyAgent::get_fov_text, enemy);
     auto fovSlider = ui->create_slider<float>(UIAnchor::BOTTOM, growthSlider,
         10, 45.0f, 180.0f, fovGet, fovSet, fovText, L"Enemy FOV");
 
-    Getter<float> radiusGet = std::bind(&ProjectThree::get_enemy_radius, this);
-    Setter<float> radiusSet = std::bind(&ProjectThree::set_enemy_radius, this, std::placeholders::_1);
-    TextGetter radiusText = std::bind(&ProjectThree::get_enemy_radius_text, this);
+    Getter<float> radiusGet = std::bind(&EnemyAgent::get_radius, enemy);
+    Setter<float> radiusSet = std::bind(&EnemyAgent::set_radius, enemy, std::placeholders::_1);
+    TextGetter radiusText = std::bind(&EnemyAgent::get_radius_text, enemy);
     auto radiusSlider = ui->create_slider<float>(UIAnchor::BOTTOM, fovSlider,
         10, 3.0f, 10.0f, radiusGet, radiusSet, radiusText, L"Enemy Dist.");
 }
@@ -492,7 +456,11 @@ void ProjectThree::toggle_hide_and_seek()
 
     if (hideAndSeek == true)
     {
-        terrain->seekLayer.set_all_values(0.0f);
+        auto op = [](float &val)
+        {
+            val = 0.0f;
+        };
+        terrain->seekLayer.for_each(op);
     }
 
     terrain->seekLayer.set_enabled(hideAndSeek);
@@ -575,90 +543,7 @@ void ProjectThree::perform_hide_and_seek()
     Messenger::send_message(Messages::ANALYSIS_BEGIN);
     Messenger::send_message(Messages::ANALYSIS_TICK_START);
 
-    enemy_field_of_view(terrain->seekLayer, enemyFOV, enemyRadius, -0.5f, enemy);
-
-    // see if the player is within the detection area
-    if (enemy_find_player(terrain->seekLayer, enemy, player) == false)
-    {
-        if (enemyFoundPlayer == false)
-        {
-            // see if the enemy doesn't currently have a goal
-            if (enemy->get_request_data().path.size() == 0)
-            {
-                // see if there is a position it makes sense to look for the player
-                if (enemy_seek_player(terrain->seekLayer, enemy) == false)
-                {
-                    // just pick a random nearby point
-                    const auto &worldPos = enemy->get_position();
-                    const auto gridPos = terrain->get_grid_position(worldPos);
-
-                    GridPos target;
-
-                    const int minRow = std::max(gridPos.row - 5, 0);
-                    const int maxRow = std::min(gridPos.row + 5, terrain->get_map_height());
-                    const int minCol = std::max(gridPos.col - 5, 0);
-                    const int maxCol = std::min(gridPos.col + 5, terrain->get_map_width());
-
-                    while (true)
-                    {
-                        target.row = RNG::range(minRow, maxRow);
-                        target.col = RNG::range(minCol, maxCol);
-
-                        if (terrain->is_valid_grid_position(target) == true && terrain->is_wall(target) == false)
-                        {
-                            break;
-                        }
-                    }
-
-                    const auto worldTarget = terrain->get_world_position(target);
-                    enemy->path_to(worldTarget);
-                }
-            }
-        }
-        else
-        {
-            enemyFoundPlayer = false;
-        }
-    }
-    else
-    {
-        const auto &playerWorld = player->get_position();
-        const auto playerGrid = terrain->get_grid_position(playerWorld);
-        
-        auto &layer = terrain->seekLayer;
-
-        if (enemyFoundPlayer == false)
-        {
-            const int width = terrain->get_map_width();
-            const int height = terrain->get_map_height();
-            for (int h = 0; h < height; ++h)
-            {
-                for (int w = 0; w < width; ++w)
-                {
-                    if (layer.get_value(h, w) > 0.0f)
-                    {
-                        layer.set_value(h, w, 0.0f);
-                    }
-                }
-            }
-
-            layer.set_value(playerGrid, 1.0f);
-            for (int i = 0; i < 3; ++i)
-            {
-                propagate_solo_occupancy(layer, propagationDecay, propagationGrowth);
-            }
-
-            enemyFoundPlayer = true;
-            enemy->path_to(playerWorld);
-            Messenger::send_message(Messages::PATH_REQUEST_END);
-        }
-        else if (enemy->get_request_data().path.size() == 0)
-        {
-            enemyFoundPlayer = false;
-        }
-
-        
-    }
+    enemy->logic_tick();
 
     Messenger::send_message(Messages::ANALYSIS_TICK_FINISH);
     Messenger::send_message(Messages::ANALYSIS_END);
