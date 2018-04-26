@@ -78,7 +78,7 @@ PathResult AStarPather::compute_path(PathRequest &request)
             PROCESSING - a path hasn't been found yet, should only be returned in
                 single step mode until a path is found
             COMPLETE - a path to the goal was found and has been built in request.path
-            IMPOSSIBLE - a path from start to goal does not exist
+            IMPOSSIBLE - a path from start to goal does not exist, do not add start position to path
     */
 
     static AStar::DH_AStarVEZ pather;

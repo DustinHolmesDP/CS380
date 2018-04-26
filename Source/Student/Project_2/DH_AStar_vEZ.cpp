@@ -209,7 +209,7 @@ namespace AStar
 
     void DH_AStarVEZ::build_empty_path(WaypointList &list)
     {
-        list.emplace_front(terrain->get_world_position(start->row, start->col));
+        //list.emplace_front(terrain->get_world_position(start->row, start->col));
     }
 
     bool DH_AStarVEZ::perform_straight_line(WaypointList &list)
