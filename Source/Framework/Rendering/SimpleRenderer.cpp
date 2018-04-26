@@ -5,6 +5,7 @@
 #include <sstream>
 #include "Core/Serialization.h"
 #include <wincodec.h>
+#include <Dbt.h>
 
 namespace
 {
@@ -361,6 +362,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             return TRUE;
         }
         break;
+    
+    case WM_DEVICECHANGE:
+        if (wParam == DBT_DEVICEARRIVAL)
+        {
+            auto pDev = reinterpret_cast<PDEV_BROADCAST_HDR>(lParam);
+            if (pDev != nullptr)
+            {
+                if (pDev->dbch_devicetype == DBT_DEVTYP_DEVICEINTERFACE)
+                {
+                    auto pInter = reinterpret_cast<const PDEV_BROADCAST_DEVICEINTERFACE>(pDev);
+                    if (pInter->dbcc_classguid == KSCATEGORY_AUDIO)
+                    {
+                        if (audio)
+                        {
+                            audio->new_device_connected();
+                        }
+                    }
+                }
+            }
+        }
 
     case WM_DESTROY:
         PostQuitMessage(0);

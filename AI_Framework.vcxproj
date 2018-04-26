@@ -185,6 +185,8 @@
     <ClInclude Include="Source\Framework\Agent\BehaviorAgent.h" />
     <ClInclude Include="Source\Framework\Agent\CameraAgent.h" />
     <ClInclude Include="Source\Framework\Agent\AStarAgent.h" />
+    <ClInclude Include="Source\Framework\Agent\EnemyAgent.h" />
+    <ClInclude Include="Source\Framework\Audio\AudioWrapper.h" />
     <ClInclude Include="Source\Framework\BehaviorTrees\BehaviorTreeBuilder.h" />
     <ClInclude Include="Source\Framework\BehaviorTrees\BehaviorTreePrototype.h" />
     <ClInclude Include="Source\Framework\BehaviorTrees\Blackboard.h" />
@@ -270,6 +272,8 @@
     <ClCompile Include="Source\Framework\Agent\BehaviorAgent.cpp" />
     <ClCompile Include="Source\Framework\Agent\CameraAgent.cpp" />
     <ClCompile Include="Source\Framework\Agent\AStarAgent.cpp" />
+    <ClCompile Include="Source\Framework\Agent\EnemyAgent.cpp" />
+    <ClCompile Include="Source\Framework\Audio\AudioWrapper.cpp" />
     <ClCompile Include="Source\Framework\BehaviorTrees\BehaviorNode.cpp" />
     <ClCompile Include="Source\Framework\BehaviorTrees\BehaviorTree.cpp" />
     <ClCompile Include="Source\Framework\BehaviorTrees\BehaviorTreeBuilder.cpp" />

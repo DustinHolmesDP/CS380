@@ -1,7 +1,7 @@
 #pragma once
 
 #include <WinSDKVer.h>
-#define _WIN32_WINNT 0x0601
+#define _WIN32_WINNT 0x0602
 
 #include <SDKDDKVer.h>
 #define NOMINMAX
@@ -62,6 +62,7 @@
 #include "SpriteFont.h"
 #include "VertexTypes.h"
 #include "WICTextureLoader.h"
+#include "Audio.h"
 
 #include "Global.h"
 #include "Core/Engine.h"
@@ -79,6 +80,7 @@
 #include "Core/Messenger.h"
 #include "Misc/RNG.h"
 #include "Core/Serialization.h"
+#include "Audio/AudioWrapper.h"
 
 namespace DX
 {

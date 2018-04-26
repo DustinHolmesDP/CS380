@@ -12,6 +12,7 @@ std::unique_ptr<AgentOrganizer> agents;
 std::unique_ptr<UICoordinator> ui;
 std::unique_ptr<AStarPather> pather;
 std::unique_ptr<BehaviorTreeBuilder> treeBuilder;
+std::unique_ptr<AudioWrapper> audio;
 
 float deltaTime = 0.16f;
 
@@ -31,6 +32,7 @@ bool Engine::initialize(HINSTANCE hInstance, int nCmdShow)
 
     return Serialization::initialize() &&
         renderer->initialize(hInstance, nCmdShow) &&
+        AudioWrapper::listen_for_new_devices();
         allocate_project() &&
         project->initialize();
 }
@@ -39,6 +41,8 @@ void Engine::shutdown()
 {
     project->shutdown();
     project.reset();
+
+    AudioWrapper::stop_listening_for_new_devices();
 
     renderer->shutdown();
     renderer.reset();
@@ -150,20 +154,20 @@ bool Engine::allocate_project()
 // Message handlers
 void Engine::on_activated()
 {
-    // game is becoming the active window
+    // becoming the active window
     shouldUpdate = true;
 }
 
 void Engine::on_deactivated()
 {
-    // game is becoming background window
+    // becoming background window
     shouldUpdate = false;
     InputHandler::reset_states();
 }
 
 void Engine::on_suspending()
 {
-    // game is being suspended or minimized
+    // being suspended or minimized
     shouldRender = false;
     shouldUpdate = false;
     InputHandler::reset_states();
@@ -171,7 +175,7 @@ void Engine::on_suspending()
 
 void Engine::on_resuming()
 {
-    // game is being resumed or returned from minimized
+    // being resumed or returned from minimized
     timer.ResetElapsedTime();
     shouldRender = true;
     shouldUpdate = false;
