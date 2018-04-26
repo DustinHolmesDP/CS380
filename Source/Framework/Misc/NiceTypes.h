@@ -16,6 +16,10 @@ using Color = DirectX::SimpleMath::Color;
 namespace Colors = DirectX::Colors;
 using Callback = std::function<void(void)>;
 
+extern const Vec3 globalUp;
+extern const Vec3 globalRight;
+extern const Vec3 globalForward;
+
 template <typename T>
 using Setter = std::function<void(const T &)>;
 
