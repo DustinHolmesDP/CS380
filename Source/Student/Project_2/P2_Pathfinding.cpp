@@ -5,17 +5,17 @@
 #pragma region Extra Credit
 bool ProjectTwo::implemented_floyd_warshall()
 {
-    return true;
+    return false;
 }
 
 bool ProjectTwo::implemented_goal_bounding()
 {
-    return true;
+    return false;
 }
 
 bool ProjectTwo::implemented_jps_plus()
 {
-    return true;
+    return false;
 }
 #pragma endregion
 
