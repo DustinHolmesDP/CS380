@@ -1,0 +1,68 @@
+{
+    "Name": "Smooth+Rubber",
+    "Settings": {
+        "Method": "A*",
+        "Heuristic": "Octile",
+        "Weight": 1.0,
+        "Smoothing": true,
+        "Rubberbanding": true
+    },
+    "Expected Results": [
+        {
+            "Map": 2,
+            "Start": {
+                "Row": 6,
+                "Col": 5
+            },
+            "Goal": {
+                "Row": 2,
+                "Col": 34
+            },
+            "Distance": 0,
+            "Has Solution": true,
+            "Requires Visual Confirmation": true
+        },
+        {
+            "Map": 2,
+            "Start": {
+                "Row": 2,
+                "Col": 34
+            },
+            "Goal": {
+                "Row": 6,
+                "Col": 5
+            },
+            "Distance": 0,
+            "Has Solution": true,
+            "Requires Visual Confirmation": true
+        },
+        {
+            "Map": 3,
+            "Start": {
+                "Row": 3,
+                "Col": 2
+            },
+            "Goal": {
+                "Row": 8,
+                "Col": 12
+            },
+            "Distance": 0,
+            "Has Solution": true,
+            "Requires Visual Confirmation": true
+        },
+        {
+            "Map": 3,
+            "Start": {
+                "Row": 8,
+                "Col": 12
+            },
+            "Goal": {
+                "Row": 3,
+                "Col": 2
+            },
+            "Distance": 0,
+            "Has Solution": true,
+            "Requires Visual Confirmation": true
+        }
+    ]
+}

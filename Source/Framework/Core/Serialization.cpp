@@ -73,7 +73,23 @@ void Serialization::generate_time_stamp(std::wstringstream &filename)
     tm l;
     localtime_s(&l, &t);
 
+    static std::wstring prev;
+    static int counter = 0;
+
     filename << std::put_time<wchar_t>(&l, L"%H-%M-%S");
+
+    if (filename.str() == prev)
+    {
+        ++counter;
+    }
+    else
+    {
+        counter = 0;
+        prev = filename.str();
+    }
+
+    filename << L"_" << counter;
+
 }
 
 void Serialization::generate_time_stamp(std::stringstream &filename)
@@ -82,7 +98,22 @@ void Serialization::generate_time_stamp(std::stringstream &filename)
     tm l;
     localtime_s(&l, &t);
 
+    static std::string prev;
+    static int counter = 0;
+
     filename << std::put_time<char>(&l, "%H-%M-%S");
+
+    if (filename.str() == prev)
+    {
+        ++counter;
+    }
+    else
+    {
+        counter = 0;
+        prev = filename.str();
+    }
+
+    filename << "_" << counter;
 }
 
 void Serialization::serialize_to(rapidjson::Value &val, const Terrain::MapData &map,

@@ -10,6 +10,7 @@
 #include "UI/Elements/Buttons/UIDynamicButton.h"
 #include "UI/Elements/Buttons/UIToggleButton.h"
 #include "UI/Elements/Text/UIDynamicBannerTextField.h"
+#include "UI/Elements/Buttons/UIConditionalButton.h"
 
 #include "Misc/TimeTracker.h"
 #include <sstream>
@@ -240,6 +241,10 @@ void ProjectTwo::build_ui()
     Getter<bool> failureCond = std::bind(&PathTester::has_multiple_failed_tests, &tester);
     auto failureButton = ui->create_conditional_button(UIAnchor::BOTTOM, allTestsButton,
         10, failureCB, L"Next Failed Test", failureCond);
+
+    Callback speedCB = std::bind(&PathTester::execute_speed_test, &tester);
+    auto speedTestButton = ui->create_button(UIAnchor::BOTTOM, failureButton, 10,
+        speedCB, L"Run Speed Test");
 
 
 

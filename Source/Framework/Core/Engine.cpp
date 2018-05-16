@@ -12,7 +12,6 @@ std::unique_ptr<AgentOrganizer> agents;
 std::unique_ptr<UICoordinator> ui;
 std::unique_ptr<AStarPather> pather;
 std::unique_ptr<BehaviorTreeBuilder> treeBuilder;
-std::unique_ptr<AudioWrapper> audio;
 
 float deltaTime = 0.16f;
 
@@ -32,7 +31,6 @@ bool Engine::initialize(HINSTANCE hInstance, int nCmdShow)
 
     return Serialization::initialize() &&
         renderer->initialize(hInstance, nCmdShow) &&
-        //AudioWrapper::listen_for_new_devices() &&
         allocate_project() &&
         project->initialize();
 }
@@ -41,8 +39,6 @@ void Engine::shutdown()
 {
     project->shutdown();
     project.reset();
-
-    //AudioWrapper::stop_listening_for_new_devices();
 
     renderer->shutdown();
     renderer.reset();

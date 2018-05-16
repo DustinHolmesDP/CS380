@@ -3,12 +3,13 @@
 #include "Core/Serialization.h"
 #include "Agent/AStarAgent.h"
 #include <sstream>
-
+#include "Misc/Stopwatch.h"
+#include <iomanip>
 #include <fstream>
 
 namespace fs = std::experimental::filesystem;
 
-const std::wstring screenshots[] = { L"Smooth_", L"Rubber_", L"Smooth_Rubber_" };
+const std::wstring screenshots[] = { L"Diagonal_", L"Smooth_", L"Rubber_", L"Smooth_Rubber_" };
 
 bool PathTester::initialize()
 {
@@ -118,7 +119,75 @@ void PathTester::execute_all_tests()
 }
 
 void PathTester::execute_speed_test()
-{}
+{
+    terrain->goto_map(1);
+
+    agent->set_heuristic_type(Heuristic::EUCLIDEAN);
+    agent->set_heuristic_weight(1.0f);
+    agent->set_debug_coloring(true);
+    agent->set_follow_path(false);
+    agent->set_method_type(Method::ASTAR);
+    agent->set_rubberbanding(false);
+    agent->set_smoothing(false);
+    agent->set_single_step(false);
+    
+    auto worldPos = terrain->get_world_position(38, 36);
+    agent->set_position(worldPos);
+
+    worldPos = terrain->get_world_position(1, 0);
+
+    Stopwatch timer;
+
+    const size_t numTests = 10000;
+
+    std::array<std::chrono::microseconds, numTests> results;
+    size_t fastest = std::numeric_limits<size_t>().max();
+    size_t total = 0;
+
+    for (size_t i = 0; i < numTests; ++i)
+    {
+        timer.start();
+        agent->path_to(worldPos, false);
+        timer.stop();
+
+        results[i] = timer.microseconds();
+
+        if (static_cast<size_t>(results[i].count()) < fastest)
+        {
+            fastest = results[i].count();
+        }
+
+        total += results[i].count();
+    }
+
+    std::stringstream filename;
+    filename << "Output/SpeedTest_";
+    Serialization::generate_time_stamp(filename);
+    filename << ".txt";
+
+    std::ofstream file(filename.str());
+
+    if (file)
+    {
+        file << "Fastest: " << fastest << " microseconds" << std::endl;
+        file << "Average: " << total / numTests << " microseconds" << std::endl << std::endl;
+
+        const std::streamsize width = 10;
+
+        file << std::left << std::setfill(' ');
+
+        file << std::setw(width) << "Test #" << "Microseconds" << std::endl;
+        std::string temp;
+
+        for (size_t i = 0; i < numTests; ++i)
+        {
+            temp = std::to_string(i + 1) + ":";
+            file << std::setw(width) << temp << results[i].count() << std::endl;
+        }
+
+        file.close();
+    }
+}
 
 void PathTester::tick()
 {
@@ -155,9 +224,13 @@ void PathTester::tick()
 
             if (settings.smoothing && settings.rubberBanding)
             {
-                needScreenshot = 2;
+                needScreenshot = 3;
             }
             else if (settings.rubberBanding == true)
+            {
+                needScreenshot = 2;
+            }
+            else if (settings.smoothing == true)
             {
                 needScreenshot = 1;
             }
@@ -175,8 +248,6 @@ void PathTester::tick()
             {
                 const auto &failures = result.get_failed_tests();
                 failedData.insert(failedData.end(), failures.begin(), failures.end());
-
-                
             }
 
             // pop the queue
@@ -234,6 +305,8 @@ void PathTester::on_test_start()
     clearGuard = true;
     testsProcessed = 0;
     needScreenshot = -1;
+    agent->set_follow_path(false);
+    agent->set_single_step(false);
     Messenger::send_message(Messages::PATH_TEST_BEGIN);
 
     results.clear();

@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 
-#define PROJECT_ONE 1
-#define PROJECT_TWO 0
+#define PROJECT_ONE 0
+#define PROJECT_TWO 1
 #define PROJECT_THREE 0
 
 // forward declarations

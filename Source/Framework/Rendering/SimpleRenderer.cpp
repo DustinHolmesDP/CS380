@@ -182,7 +182,7 @@ DebugRenderer &SimpleRenderer::get_debug_renderer()
 bool SimpleRenderer::output_screenshot(const std::wstring &filename)
 {
     std::wstringstream filenameFull;
-    filenameFull << filename;
+    filenameFull << L"Output/" << filename;
 
     Serialization::generate_time_stamp(filenameFull);
     filenameFull << L".png";

@@ -1,7 +1,6 @@
 #include <pch.h>
 #include "Projects/ProjectTwo.h"
 #include "P2_Pathfinding.h"
-#include "DH_AStar_vEZ.h"
 
 #pragma region Extra Credit
 bool ProjectTwo::implemented_floyd_warshall()
@@ -81,39 +80,15 @@ PathResult AStarPather::compute_path(PathRequest &request)
             IMPOSSIBLE - a path from start to goal does not exist, do not add start position to path
     */
 
-    static AStar::DH_AStarVEZ pather;
-
-    if (request.newRequest == true)
-    {
-        const auto start = terrain->get_grid_position(request.start);
-        const auto goal = terrain->get_grid_position(request.goal);
-
-        pather.set_positions(start.row, start.col, goal.row, goal.col, static_cast<int>(request.settings.heuristic), request.settings.weight);
-        pather.set_options(request.settings.smoothing, request.settings.rubberBanding, false, request.settings.singleStep, request.settings.debugColoring);
-    }
-
-    const auto result = pather.process(request.path);
-
-    if (result == true)
-    {
-        if (request.path.size() > 0)
-        {
-            return PathResult::COMPLETE;
-        }
-        else
-        {
-            return PathResult::IMPOSSIBLE;
-        }
-    }
-    else
-    {
-        return PathResult::PROCESSING;
-    }
+    // WRITE YOUR CODE HERE
 
     
-    /*terrain->set_color(start.row, start.col, AIColor::AI_ORANGE);
-    terrain->set_color(goal.row, goal.col, AIColor::AI_ORANGE);
-    request.path.push_back(terrain->get_world_position(goal.row, goal.col));
-    request.path.push_front(terrain->get_world_position(start.row, start.col));
-    return PathResult::COMPLETE;*/
+    // Just sample code, safe to delete
+    GridPos start = terrain->get_grid_position(request.start);
+    GridPos goal = terrain->get_grid_position(request.goal);
+    terrain->set_color(start, Colors::Orange);
+    terrain->set_color(goal, Colors::Orange);
+    request.path.push_back(request.start);
+    request.path.push_back(request.goal);
+    return PathResult::COMPLETE;
 }

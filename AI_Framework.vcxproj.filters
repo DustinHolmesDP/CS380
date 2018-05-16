@@ -226,15 +226,6 @@
     <ClInclude Include="Source\Framework\UI\Elements\Buttons\UIDynamicButton.h">
       <Filter>Source\Framework\UI\Elements\Buttons</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Student\Project_2\DH_AStar_Node_vEZ.h">
-      <Filter>Source\Student\Project_2</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Student\Project_2\DH_Astar_OpenList_vEZ.h">
-      <Filter>Source\Student\Project_2</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Student\Project_2\DH_AStar_vEZ.h">
-      <Filter>Source\Student\Project_2</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Student\Project_2\P2_Pathfinding.h">
       <Filter>Source\Student\Project_2</Filter>
     </ClInclude>
@@ -330,9 +321,6 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\Agent\EnemyAgent.h">
       <Filter>Source\Framework\Agent</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\Audio\AudioWrapper.h">
-      <Filter>Source\Framework\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -459,12 +447,6 @@
     <ClCompile Include="Source\Student\Project_3\P3_TerrainAnalysis.cpp">
       <Filter>Source\Student\Project_3</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Student\Project_2\DH_AStar_OpenList_vEZ.cpp">
-      <Filter>Source\Student\Project_2</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Student\Project_2\DH_AStar_vEZ.cpp">
-      <Filter>Source\Student\Project_2</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Student\Project_2\P2_Pathfinding.cpp">
       <Filter>Source\Student\Project_2</Filter>
     </ClCompile>
@@ -560,9 +542,6 @@
     </ClCompile>
     <ClCompile Include="Source\Framework\Agent\EnemyAgent.cpp">
       <Filter>Source\Framework\Agent</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\Audio\AudioWrapper.cpp">
-      <Filter>Source\Framework\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

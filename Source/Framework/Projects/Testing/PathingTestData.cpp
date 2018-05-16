@@ -45,7 +45,11 @@ PathingTestData::Outcome PathingTestData::operator()(AStarAgent *agent)
     // check if we got a path and we were expecting one
     const bool pathFound = pathData.path.size() > 0;
 
-    if (pathFound == true && hasSolution == true)
+    if (requiresVisualConfirmation == true)
+    {
+        outcome = Outcome::VALID;
+    }
+    else if (pathFound == true && hasSolution == true)
     {
         // verify the start and goal positions are correct;
         const auto startPos = terrain->get_grid_position(pathData.path.front());
