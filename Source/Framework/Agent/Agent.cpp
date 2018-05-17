@@ -1,6 +1,18 @@
+/******************************************************************************/
+/*!
+\file		Agent.cpp
+\project	CS380/CS580 AI Framework
+\author		Dustin Holmes
+\summary	Base actor implementation
+
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************************/
+
 #include <pch.h>
 #include "Agent.h"
-#include "../Rendering/DrawPackage.h"
 
 const Vec3 globalUp = Vec3(0.0f, 1.0f, 0.0f);
 const Vec3 globalRight = Vec3(-1.0f, 0.0f, 0.0f);

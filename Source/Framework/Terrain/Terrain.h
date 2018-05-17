@@ -1,3 +1,16 @@
+/******************************************************************************/
+/*!
+\file		Terrain.h
+\project	CS380/CS580 AI Framework
+\author		Dustin Holmes
+\summary	Map and layer management
+
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************************/
+
 #pragma once
 #include "MapLayer.h"
 #include "../Misc/NiceTypes.h"
@@ -5,7 +18,6 @@
 
 
 class Agent;
-struct DrawPackage;
 class DeviceResources;
 class ProjectOne;
 class ProjectTwo;

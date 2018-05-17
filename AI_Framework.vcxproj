@@ -219,7 +219,6 @@
     <ClInclude Include="Source\Framework\Projects\Testing\PathingTestResult.h" />
     <ClInclude Include="Source\Framework\Rendering\DebugRenderer.h" />
     <ClInclude Include="Source\Framework\Rendering\DeviceResources.h" />
-    <ClInclude Include="Source\Framework\Rendering\DrawPackage.h" />
     <ClInclude Include="Source\Framework\Rendering\MeshRenderer.h" />
     <ClInclude Include="Source\Framework\Rendering\ReadShader.h" />
     <ClInclude Include="Source\Framework\Rendering\SimpleRenderer.h" />
@@ -313,7 +312,6 @@
     <ClCompile Include="Source\Framework\UI\Elements\Buttons\UIConditionalButton.cpp" />
     <ClCompile Include="Source\Framework\UI\Elements\Buttons\UIDynamicButton.cpp" />
     <ClCompile Include="Source\Framework\UI\Elements\Buttons\UIToggleButton.cpp" />
-    <ClCompile Include="Source\Framework\UI\Elements\Sliders\UISlider.cpp" />
     <ClCompile Include="Source\Framework\UI\Elements\Text\UIBannerTextField.cpp" />
     <ClCompile Include="Source\Framework\UI\Elements\Text\UIBehaviorTreeTextField.cpp" />
     <ClCompile Include="Source\Framework\UI\Elements\Text\UIDynamicBannerTextField.cpp" />

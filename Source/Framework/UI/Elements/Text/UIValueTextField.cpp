@@ -1,3 +1,16 @@
+/******************************************************************************/
+/*!
+\file		UIValueTextField.cpp
+\project	CS380/CS580 AI Framework
+\author		Dustin Holmes
+\summary	UI text for displaying a named value
+
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************************/
+
 #include <pch.h>
 #include "UIValueTextField.h"
 

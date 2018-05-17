@@ -1,8 +1,22 @@
+/******************************************************************************/
+/*!
+\file		Global.h
+\project	CS380/CS580 AI Framework
+\author		Dustin Holmes
+\summary	Global variables and systems
+
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************************/
+
 #pragma once
 #include <memory>
 
-#define PROJECT_ONE 0
-#define PROJECT_TWO 1
+// which project to load on startup
+#define PROJECT_ONE 1
+#define PROJECT_TWO 0
 #define PROJECT_THREE 0
 
 // forward declarations

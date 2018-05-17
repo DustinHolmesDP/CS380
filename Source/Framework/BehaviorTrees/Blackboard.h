@@ -1,3 +1,16 @@
+/******************************************************************************/
+/*!
+\file		Blackboard.h
+\project	CS380/CS580 AI Framework
+\author		Dustin Holmes
+\summary	Generic key based blackboard for behavior agents
+
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************************/
+
 #pragma once
 #include <any>
 #include <unordered_map>
