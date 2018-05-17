@@ -66,9 +66,17 @@ bool Serialization::initialize()
         behaviorTreePath = basePath / "Source" / "Student" / "Project_1" / "Trees";
 
         if (fs::exists(mapsPath) && fs::exists(testsPath) &&
-            fs::exists(assetsPath) && fs::exists(outputPath) && 
+            fs::exists(assetsPath) && 
             fs::exists(behaviorTreePath))
         {
+            if (fs::exists(outputPath) == false)
+            {
+                if (fs::create_directory(outputPath) == false)
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
         else
