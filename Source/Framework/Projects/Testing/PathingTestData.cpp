@@ -1,3 +1,16 @@
+/******************************************************************************/
+/*!
+\file		PathingTestData.cpp
+\project	CS380/CS580 AI Framework
+\author		Dustin Holmes
+\summary	A single specific instance of a pathfinding test
+
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************************/
+
 #include <pch.h>
 #include "PathingTestData.h"
 #include "Agent/AStarAgent.h"

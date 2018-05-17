@@ -74,9 +74,6 @@
     <Filter Include="Source\Framework\BehaviorTrees">
       <UniqueIdentifier>{8b9856ae-2a38-48a7-8728-801b19ef692c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Framework\Audio">
-      <UniqueIdentifier>{e8581939-391b-4956-becb-b1ecafa4e5bd}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\pch.h">
@@ -102,9 +99,6 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\Misc\NiceTypes.h">
       <Filter>Source\Framework\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\Rendering\DrawPackage.h">
-      <Filter>Source\Framework\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Rendering\SimpleRenderer.h">
       <Filter>Source\Framework\Rendering</Filter>
@@ -428,9 +422,6 @@
     </ClCompile>
     <ClCompile Include="Source\Framework\UI\Elements\Buttons\UIToggleButton.cpp">
       <Filter>Source\Framework\UI\Elements\Buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\UI\Elements\Sliders\UISlider.cpp">
-      <Filter>Source\Framework\UI\Elements\Sliders</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\UI\Elements\Text\UITextField.cpp">
       <Filter>Source\Framework\UI\Elements\Text</Filter>

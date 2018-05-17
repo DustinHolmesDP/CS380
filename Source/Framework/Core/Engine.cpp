@@ -1,3 +1,16 @@
+/******************************************************************************/
+/*!
+\file		Engine.cpp
+\project	CS380/CS580 AI Framework
+\author		Dustin Holmes
+\summary	Engine implementation
+
+Copyright (C) 2018 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************************/
+
 #include <pch.h>
 #include "Projects/ProjectOne.h"
 #include "Projects/ProjectTwo.h"
@@ -29,10 +42,17 @@ bool Engine::initialize(HINSTANCE hInstance, int nCmdShow)
     //timer.SetFixedTimeStep(true);
     //timer.SetTargetElapsedSeconds(1.0 / 60);
 
-    return Serialization::initialize() &&
+    bool result = Serialization::initialize() &&
         renderer->initialize(hInstance, nCmdShow) &&
         allocate_project() &&
         project->initialize();
+
+    if (result == false)
+    {
+        pauseOnExit = true;
+    }
+
+    return result;
 }
 
 void Engine::shutdown()
@@ -151,13 +171,14 @@ bool Engine::allocate_project()
 void Engine::on_activated()
 {
     // becoming the active window
-    shouldUpdate = true;
+    //shouldUpdate = true;
+
 }
 
 void Engine::on_deactivated()
 {
     // becoming background window
-    shouldUpdate = false;
+    //shouldUpdate = false;
     InputHandler::reset_states();
 }
 
@@ -195,5 +216,5 @@ DX::StepTimer &Engine::get_timer()
 
 bool Engine::should_pause_on_exit() const
 {
-    return pauseOnExit;;
+    return pauseOnExit;
 }
