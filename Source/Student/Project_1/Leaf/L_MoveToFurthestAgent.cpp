@@ -37,7 +37,6 @@ void L_MoveToFurthestAgent::on_enter()
     if (targetFound == true)
     {
         targetPoint = furthestPoint;
-        //agent->look_at_point(targetPoint);
         set_status(NodeStatus::RUNNING);
     }
     else // couldn't find a viable agent

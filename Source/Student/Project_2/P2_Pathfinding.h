@@ -7,7 +7,7 @@ public:
     /* 
         The class should be default constructible, so you may need to define a constructor.
         If needed, you can modify the framework where the class is constructed in the
-        initialize functions of ProjectTwo and ProjectTwo.
+        initialize functions of ProjectTwo and ProjectThree.
     */
 
     /* ************************************************** */
